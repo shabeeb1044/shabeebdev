@@ -17,6 +17,7 @@ import {
   skills,
   stats,
   tools,
+  workApproach,
 } from "../data/profile";
 import { blogs } from "../data/blogs";
 import { seoFaq } from "../data/seo";
@@ -30,6 +31,69 @@ const pages = [
   { name: "Blog", icon: "newspaper-outline" },
   { name: "Contact", icon: "mail-outline" },
 ];
+
+function ExperienceList() {
+  return (
+    <ol className="timeline-list">
+      {experience.map((item) => (
+        <li className="timeline-item" key={`${item.company}-${item.role}`}>
+          <h4 className="h4 timeline-item-title">{item.role}</h4>
+          <p className="timeline-company">{item.company}</p>
+          <span>{item.period}</span>
+          <p className="timeline-text">{item.text}</p>
+          {item.highlights?.length ? (
+            <ul className="timeline-highlights">
+              {item.highlights.map((point) => (
+                <li key={point}>{point}</li>
+              ))}
+            </ul>
+          ) : null}
+        </li>
+      ))}
+    </ol>
+  );
+}
+
+function EducationList() {
+  return (
+    <ol className="timeline-list">
+      {education.map((item) => (
+        <li className="timeline-item" key={item.title}>
+          <h4 className="h4 timeline-item-title">{item.title}</h4>
+          <span>{item.period}</span>
+          <p className="timeline-text">{item.text}</p>
+        </li>
+      ))}
+    </ol>
+  );
+}
+
+function SkillsPanel() {
+  return (
+    <>
+      <ul className="skills-list content-card">
+        {skills.map((skill) => (
+          <li className="skills-item" key={skill.name}>
+            <div className="title-wrapper">
+              <h5 className="h5">{skill.name}</h5>
+              <data value={skill.value}>{skill.value}%</data>
+            </div>
+            <div className="skills-progress-bg">
+              <div className="skills-progress-fill" style={{ width: `${skill.value}%` }}></div>
+            </div>
+          </li>
+        ))}
+      </ul>
+      <div className="skill-tags">
+        {skillTags.map((tag) => (
+          <span className="skill-tag" key={tag}>
+            {tag}
+          </span>
+        ))}
+      </div>
+    </>
+  );
+}
 
 function PortfolioAppInner() {
   const searchParams = useSearchParams();
@@ -144,13 +208,25 @@ function PortfolioAppInner() {
             className="info-more-btn"
             type="button"
             onClick={() => setSidebarOpen((open) => !open)}
+            aria-expanded={sidebarOpen}
+            aria-controls="sidebar-contacts"
+            aria-label={sidebarOpen ? "Hide contacts" : "Show contacts"}
           >
-            <span>{sidebarOpen ? "Hide Contacts" : "Show Contacts"}</span>
-            <IonIcon name={sidebarOpen ? "chevron-up" : "chevron-down"} />
+            <span className="info-more-label">{sidebarOpen ? "Hide Contacts" : "Show Contacts"}</span>
+            <svg className="info-more-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path
+                d="M6 9.5 12 15.5 18 9.5"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
           </button>
         </div>
 
-        <div className="sidebar-info-more">
+        <div className="sidebar-info-more" id="sidebar-contacts">
           <div className="separator"></div>
 
           <ul className="contacts-list">
@@ -282,6 +358,43 @@ function PortfolioAppInner() {
             </ul>
           </section>
 
+          <section className="timeline about-block reveal">
+            <div className="title-wrapper">
+              <div className="icon-box">
+                <IonIcon name="briefcase-outline" />
+              </div>
+              <h3 className="h3">Experience</h3>
+            </div>
+            <ExperienceList />
+          </section>
+
+          <section className="skill about-block reveal">
+            <h3 className="h3 skills-title">Skills</h3>
+            <SkillsPanel />
+          </section>
+
+          <section className="about-approach about-block reveal">
+            <h3 className="h3 service-title">How I work</h3>
+            <ul className="about-approach-list">
+              {workApproach.map((item) => (
+                <li className="about-approach-item" key={item.title}>
+                  <h4 className="h4">{item.title}</h4>
+                  <p>{item.text}</p>
+                </li>
+              ))}
+            </ul>
+          </section>
+
+          <section className="timeline about-block reveal">
+            <div className="title-wrapper">
+              <div className="icon-box">
+                <IonIcon name="book-outline" />
+              </div>
+              <h3 className="h3">Education</h3>
+            </div>
+            <EducationList />
+          </section>
+
           <section className="service reveal">
             <h3 className="h3 service-title">What I&apos;m doing</h3>
             <ul className="service-list">
@@ -343,15 +456,7 @@ function PortfolioAppInner() {
               </div>
               <h3 className="h3">Education</h3>
             </div>
-            <ol className="timeline-list">
-              {education.map((item) => (
-                <li className="timeline-item" key={item.title}>
-                  <h4 className="h4 timeline-item-title">{item.title}</h4>
-                  <span>{item.period}</span>
-                  <p className="timeline-text">{item.text}</p>
-                </li>
-              ))}
-            </ol>
+            <EducationList />
           </section>
 
           <section className="timeline reveal">
@@ -361,47 +466,12 @@ function PortfolioAppInner() {
               </div>
               <h3 className="h3">Experience</h3>
             </div>
-            <ol className="timeline-list">
-              {experience.map((item) => (
-                <li className="timeline-item" key={`${item.company}-${item.role}`}>
-                  <h4 className="h4 timeline-item-title">{item.role}</h4>
-                  <p className="timeline-company">{item.company}</p>
-                  <span>{item.period}</span>
-                  <p className="timeline-text">{item.text}</p>
-                  {item.highlights?.length ? (
-                    <ul className="timeline-highlights">
-                      {item.highlights.map((point) => (
-                        <li key={point}>{point}</li>
-                      ))}
-                    </ul>
-                  ) : null}
-                </li>
-              ))}
-            </ol>
+            <ExperienceList />
           </section>
 
           <section className="skill reveal">
             <h3 className="h3 skills-title">My skills</h3>
-            <ul className="skills-list content-card">
-              {skills.map((skill) => (
-                <li className="skills-item" key={skill.name}>
-                  <div className="title-wrapper">
-                    <h5 className="h5">{skill.name}</h5>
-                    <data value={skill.value}>{skill.value}%</data>
-                  </div>
-                  <div className="skills-progress-bg">
-                    <div className="skills-progress-fill" style={{ width: `${skill.value}%` }}></div>
-                  </div>
-                </li>
-              ))}
-            </ul>
-            <div className="skill-tags">
-              {skillTags.map((tag) => (
-                <span className="skill-tag" key={tag}>
-                  {tag}
-                </span>
-              ))}
-            </div>
+            <SkillsPanel />
           </section>
         </article>
 

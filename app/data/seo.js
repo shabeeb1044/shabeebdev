@@ -2,13 +2,15 @@ import { profile, projects, services } from "./profile";
 
 export const siteConfig = {
   name: profile.name,
-  title: "Web Developer in Kerala | Low Cost Website Development",
-  titleTemplate: "%s | Muhammed Shabeeb — Web Developer Kerala",
+  title: "Web Developer in Kerala | Muhammed Shabeeb",
+  titleTemplate: "%s | Muhammed Shabeeb",
   description:
     "Muhammed Shabeeb is a full-stack web developer in Malappuram, Kerala. Hire for website development, low cost website development, MERN stack apps, WordPress sites, and affordable web design across Kerala — Kochi, Calicut, Thrissur, and India.",
+  metaDescription:
+    "Full-stack web developer in Malappuram, Kerala. Websites, MERN and Next.js apps, WordPress, and low-cost web design across Kerala.",
   url: process.env.NEXT_PUBLIC_SITE_URL || "https://muhammedshabeeb.com",
   locale: "en_IN",
-  ogImage: "/avatar.png?v=6",
+  ogImage: "/og.png",
 };
 
 /** Primary + long-tail keywords to rank for local website searches */
@@ -104,7 +106,7 @@ export const seoFaq = [
   {
     question: "What website development services do you provide?",
     answer:
-      "The main services are backend development, production deployment, VPS server management, and AI automation with n8n, Zapier, or custom software — including AI assistants integrated into applications. Website design and development with React, Next.js, WordPress, and PHP are available when a project needs a full site.",
+      "The main services are backend development, production deployment, VPS server management, corporate website maintenance, web troubleshooting, hacked or malware-infected website recovery, and AI automation with n8n, Zapier, or custom software. Website design and development with React, Next.js, WordPress, and PHP are available when a project needs a full site.",
   },
   {
     question: "Can I hire a freelance web developer in Kochi, Calicut, or Malappuram?",
@@ -139,6 +141,8 @@ export function buildPersonJsonLd() {
       "Next.js",
       "React",
       "WordPress",
+      "Website maintenance",
+      "Hacked website recovery",
       "SEO friendly websites",
     ],
   };
@@ -272,15 +276,24 @@ export function buildBlogListJsonLd() {
 }
 
 export function getJsonLdGraph() {
+  const nodes = [
+    buildPersonJsonLd(),
+    buildLocalBusinessJsonLd(),
+    buildWebsiteJsonLd(),
+    buildFaqJsonLd(),
+    buildItemListJsonLd(),
+    buildBlogListJsonLd(),
+  ].map((node) => {
+    const { "@context": _context, ...rest } = node;
+    return rest;
+  });
+
   return {
     "@context": "https://schema.org",
-    "@graph": [
-      buildPersonJsonLd(),
-      buildLocalBusinessJsonLd(),
-      buildWebsiteJsonLd(),
-      buildFaqJsonLd(),
-      buildItemListJsonLd(),
-      buildBlogListJsonLd(),
-    ],
+    "@graph": nodes,
   };
+}
+
+export function jsonLdHtml(data) {
+  return JSON.stringify(data).replace(/</g, "\\u003c");
 }

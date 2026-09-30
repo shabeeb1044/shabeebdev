@@ -1,11 +1,10 @@
 import Link from "next/link";
-import Script from "next/script";
 import { notFound } from "next/navigation";
 import IonIcon from "../../components/IonIcon";
 import ThemeToggle from "../../components/ThemeToggle";
 import { blogs, getBlogBySlug } from "../../data/blogs";
 import { profile } from "../../data/profile";
-import { siteConfig } from "../../data/seo";
+import { jsonLdHtml, siteConfig } from "../../data/seo";
 
 export function generateStaticParams() {
   return blogs.map((blog) => ({ slug: blog.slug }));
@@ -80,13 +79,10 @@ export default async function BlogDetailPage({ params }) {
 
   return (
     <main className="detail-main">
-      <Script
-        id={`ld-blog-${blog.slug}`}
+      <script
         type="application/ld+json"
-        strategy="afterInteractive"
-      >
-        {JSON.stringify(articleJsonLd)}
-      </Script>
+        dangerouslySetInnerHTML={{ __html: jsonLdHtml(articleJsonLd) }}
+      />
       <article className="detail-card active">
         <div className="detail-top">
           <Link href="/?page=blog" className="detail-back">

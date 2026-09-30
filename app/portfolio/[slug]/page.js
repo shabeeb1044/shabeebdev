@@ -8,7 +8,7 @@ import {
   projectCovers,
   projects,
 } from "../../data/profile";
-import { siteConfig } from "../../data/seo";
+import { jsonLdHtml, siteConfig } from "../../data/seo";
 
 export function generateStaticParams() {
   return projects.map((project) => ({ slug: project.slug }));
@@ -21,8 +21,9 @@ export async function generateMetadata({ params }) {
     return { title: "Project not found" };
   }
 
-  const title = `${project.title} — Website Development Kerala`;
+  const title = project.title;
   const description = `${project.summary} Built by ${profile.name}, a web developer in Kerala offering low cost website development and full-stack web apps.`;
+  const image = project.image || siteConfig.ogImage;
 
   return {
     title,
@@ -39,12 +40,17 @@ export async function generateMetadata({ params }) {
       canonical: `/portfolio/${project.slug}`,
     },
     openGraph: {
+      type: "article",
       title: `${project.title} | ${profile.name}`,
       description,
       url: `${siteConfig.url}/portfolio/${project.slug}`,
-      images: project.image
-        ? [{ url: project.image, alt: `${project.title} preview` }]
-        : undefined,
+      images: [{ url: image, alt: `${project.title} preview` }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${project.title} | ${profile.name}`,
+      description,
+      images: [image],
     },
   };
 }
@@ -66,8 +72,33 @@ export default async function ProjectDetailPage({ params }) {
   const status = project.status || (project.liveUrl ? "Live" : "Completed");
   const stack = project.stack || project.tech;
 
+  const pageUrl = `${siteConfig.url}/portfolio/${project.slug}`;
+  const workJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    name: project.title,
+    description: project.summary,
+    url: pageUrl,
+    image: project.image
+      ? new URL(project.image, siteConfig.url).href
+      : `${siteConfig.url}${siteConfig.ogImage}`,
+    author: {
+      "@type": "Person",
+      name: profile.name,
+      url: siteConfig.url,
+    },
+    creator: {
+      "@type": "Person",
+      name: profile.name,
+    },
+  };
+
   return (
     <main className="detail-main">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: jsonLdHtml(workJsonLd) }}
+      />
       <article className="detail-card active">
         <div className="detail-top">
           <Link href="/?page=portfolio" className="detail-back">

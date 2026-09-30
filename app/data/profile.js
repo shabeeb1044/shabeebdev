@@ -16,14 +16,37 @@ export const profile = {
 export const aboutFocus = [
   { label: "Full stack developer" },
   { label: "Server management" },
+  { label: "Website maintenance" },
+  { label: "Hacked site recovery" },
   { label: "AI automation" },
   { label: "WhatsApp automation" },
 ];
 
 export const about = [
-  "I'm Muhammed Shabeeb, a full stack developer in Malappuram, Kerala. I build websites and web apps end to end — APIs, databases, interfaces, and the servers that keep products online.",
-  "I set up and look after VPS servers, ship releases, and handle monitoring, backups, and day-to-day server care so sites stay stable after launch.",
-  "I also build AI automation and WhatsApp automation — with n8n, Zapier, or custom software when the workflow needs a tailored stack. That includes wiring AI assistants into your apps, content pipelines, chatbots, notifications, and customer support flows so repetitive work runs on its own. If you need a developer who can ship the product and automate the busywork, I would be glad to connect.",
+  "I'm Muhammed Shabeeb, a full stack developer in Malappuram, Kerala. I build websites and web apps end to end — interfaces, APIs, databases, and the servers that keep products online.",
+  "I have been doing this since late 2022: full-stack features on the MERN stack, client websites for brands and campaigns, and product work that has to stay reliable after launch. That includes a job portal, office systems, and more than 100 website projects.",
+  "I set up and look after VPS servers, ship releases, and handle monitoring, backups, and day-to-day server care so sites stay stable once they are live. Corporate sites also get ongoing maintenance and support: content updates, plugin and package care, uptime checks, and fixes when a page, form, or checkout stops working.",
+  "If a website is hacked or hit by malware, I recover it. That means finding the injected code, cleaning malicious rows and files out of the database and the site, restoring a clean version, and closing the gaps that let the attack in.",
+  "I also build AI automation and WhatsApp automation — with n8n, Zapier, or custom software when the workflow needs a tailored stack. That includes wiring AI assistants into apps, content pipelines, chatbots, notifications, and customer support flows so repetitive work runs on its own. If you need a developer who can ship the product and automate the busywork, I would be glad to connect.",
+];
+
+export const workApproach = [
+  {
+    title: "Build the whole product",
+    text: "Screens, APIs, data, and hosting stay in one place so a project does not get split across three handoffs.",
+  },
+  {
+    title: "Leave it running",
+    text: "After launch I handle releases, monitoring, and backups so the site still works when real traffic shows up.",
+  },
+  {
+    title: "Cut the repeat work",
+    text: "Support replies, notifications, and content steps can run through n8n, Zapier, or custom code instead of manual follow-up.",
+  },
+  {
+    title: "Fix it when it breaks",
+    text: "Broken pages, errors after an update, and sites taken over by malware get a clear diagnosis, a cleanup, and a path back online.",
+  },
 ];
 
 export const stats = [
@@ -67,6 +90,24 @@ export const services = [
     icon: "flash-outline",
     title: "AI automation",
     text: "Workflow automation with n8n, Zapier, or custom software — plus AI assistants integrated into your apps for chat, support, and day-to-day tasks.",
+    main: true,
+  },
+  {
+    icon: "business-outline",
+    title: "Corporate website maintenance",
+    text: "Ongoing support for company websites: content updates, security patches, backups, uptime checks, and small changes so the site stays current.",
+    main: true,
+  },
+  {
+    icon: "construct-outline",
+    title: "Web troubleshooting",
+    text: "Track down broken pages, form failures, slow loads, plugin conflicts, and server errors, then fix the cause instead of hiding the symptom.",
+    main: true,
+  },
+  {
+    icon: "shield-checkmark-outline",
+    title: "Hacked website recovery",
+    text: "Clean a malware-infected or hacked site: remove injected code, clear malicious content from the database and files, restore a safe version, and tighten access so it does not return.",
     main: true,
   },
   {
