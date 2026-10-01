@@ -19,5 +19,9 @@
 	},
 	"observability": {
 		"enabled": true
+	},
+	"vars": {
+		"NEXT_PUBLIC_SITE_URL": "https://shabeebdev.online",
+		"NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY": "a4eb4aee-4b85-4119-971a-b363650d4c2a"
 	}
 }
